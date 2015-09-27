@@ -221,3 +221,11 @@ FakesAssemblies/
 **/*.Server/GeneratedArtifacts
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
+
+# Idea files
+.idea/
+CMakeLists.txt
+
+# Symbolic Links
+lab1/lab1/common.cpp
+lab1/lab1/common.h

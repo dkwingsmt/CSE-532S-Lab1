@@ -9,13 +9,6 @@
 
 using namespace std;
 
-Player::Player(Play &play, ifstream &input_file, const string &name) : 
-    play(play), 
-    input_file(input_file),
-    name(name) {
-
-}
-
 void Player::read() {
     string line;
     if (!input_file) {

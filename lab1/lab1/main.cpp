@@ -45,7 +45,8 @@ int main(int argc, char *  argv[])
         string inputFileName;
         if (istringstream(line) >> characterName >> inputFileName)
         {
-            players.push_back({play, characterName, ifstream(fileDir + inputFileName)});
+            ifstream ifs(fileDir + inputFileName);
+            players.push_back(Player(play, move(ifs), characterName));
         }
     }
 

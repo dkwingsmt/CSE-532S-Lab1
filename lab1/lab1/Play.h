@@ -12,6 +12,7 @@
 #include <string>
 #include <mutex>
 #include <condition_variable>
+#include <vector>
 
 using namespace std;
 
@@ -31,6 +32,7 @@ struct PlayLine {
 //      construct a printable score. 
 class Play
 {
+private:
 	mutex reciteMutex;
 	condition_variable reciteCv;
 	string name;
@@ -41,7 +43,7 @@ class Play
 public:
 	Play(string playName) : name(playName), counter(0) {}
 
-	void recite(list<PlayLine>::const_iterator &line);
+	void recite(vector<PlayLine>::const_iterator &line);
 
 };
 

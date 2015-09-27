@@ -7,13 +7,13 @@
 
 using namespace std;
 
-void recite(list<PlayLine>::const_iterator &line) {
+void Play::recite(vector<PlayLine>::const_iterator &line) {
     unique_lock<mutex> ul(reciteMutex);
-    cv.wait(ul, [&]{ return counter >= line.order; });
-    if (counter == line.order) {
-        if (currentPlayer != line.character) {
-            cout << "\n" << line.character << "." << endl;
-            currentPlayer = line.character;
+    reciteCv.wait(ul, [&]{ return counter >= line->order; });
+    if (counter == line->order) {
+        if (currentPlayer != line->character) {
+            cout << "\n" << line->character << "." << endl;
+            currentPlayer = line->character;
         }
         cout << line.
         counter++;
@@ -24,5 +24,5 @@ void recite(list<PlayLine>::const_iterator &line) {
     }
     line++;
     ul.unlock();
-    cv.notify_all();
+    reciteCv.notify_all();
 }

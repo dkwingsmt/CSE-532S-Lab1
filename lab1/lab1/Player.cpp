@@ -9,11 +9,10 @@
 
 using namespace std;
 
-Player::Player(Play &play, const vector<PlayLine> &lines, const ifstream &input_file, const string &name) : play(play),
-                                                                                                            lines(lines),
-                                                                                                            input_file(
-                                                                                                                    input_file),
-                                                                                                            name(name) {
+Player::Player(Play &play, ifstream input_file, const string &name) : 
+    play(play), 
+    input_file(move(input_file)),
+    name(name) {
 
 }
 

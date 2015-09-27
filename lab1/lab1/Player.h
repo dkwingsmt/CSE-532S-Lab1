@@ -22,12 +22,12 @@ private:
     Play             &play;
     thread           player_thread;
 
-public:
-    Player(Play &play, const vector<PlayLine> &lines, const ifstream &input_file, const string &name);
-
     void read();
 
     void act();
+
+public:
+    Player(Play &play, ifstream input_file, const string &name);
 
     void enter();
 

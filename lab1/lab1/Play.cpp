@@ -15,7 +15,7 @@ void Play::recite(vector<PlayLine>::const_iterator &line) {
             cout << "\n" << line->character << "." << endl;
             currentPlayer = line->character;
         }
-        cout << line.
+        cout << line->text << endl;
         counter++;
     }
     else {

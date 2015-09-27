@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 #include <sstream>
 #include "Player.h"
 #include "common.h"
@@ -32,7 +33,7 @@ void Player::read() {
 }
 
 void Player::act() {
-
+	sort(lines.begin(), lines.end());
     for(vector<PlayLine>::const_iterator playIterator = lines.begin(); playIterator != lines.end();)
         play.recite(playIterator);
 

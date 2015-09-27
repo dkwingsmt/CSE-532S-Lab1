@@ -2,32 +2,27 @@
 // Definition of corresponding header file.
 
 #include <algorithm>
+#include <iostream>
 #include "Play.h"
 
 using namespace std;
 
-Play& Play::operator<< (PlayLine line)
-{
-	lock_guard<mutex> lock(insertionMutex);
-	lines.push_back(line);
-	return *this;
-}
-
-void Play::print(ostream &out)
-{
-	lock_guard<mutex> lock(insertionMutex);
-	//First sort the lines 
-	sort(lines.begin(), lines.end());
-	string currentName;
-	for (auto &currentLine : lines)
-	{
-		if (currentLine.character != currentName)
-		{
-			if (!currentName.empty())
-				out << endl;
-			currentName = currentLine.character;
-			out << currentName << "." << endl;
-		}
-		out << currentLine.text << endl;
-	}
+void Play::recite(vector<PlayLine>::const_iterator &line) {
+    unique_lock<mutex> ul(reciteMutex);
+    reciteCv.wait(ul, [&]{ return counter >= line->order; });
+    if (counter == line->order) {
+        if (currentPlayer != line->character) {
+            cout << "\n" << line->character << "." << endl;
+            currentPlayer = line->character;
+        }
+        cout << line->text << endl;
+        counter++;
+    }
+    else {
+        cerr << "ERROR: Unexpected PlayLine order. [character= " << line->character << 
+            " line.order= " << line->order << " play.counter= " << counter << "\n";
+    }
+    line++;
+    ul.unlock();
+    reciteCv.notify_all();
 }

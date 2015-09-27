@@ -11,6 +11,8 @@
 #include <vector>
 #include <string>
 #include <mutex>
+#include <condition_variable>
+#include <vector>
 
 using namespace std;
 
@@ -30,20 +32,18 @@ struct PlayLine {
 //      construct a printable score. 
 class Play
 {
-	mutex insertionMutex;
+private:
+	mutex reciteMutex;
+	condition_variable reciteCv;
 	string name;
-	vector<PlayLine> lines;
+    size_t counter;
+
+	string currentPlayer;
 
 public:
-	Play(string playName) : name(playName) {}
+	Play(string playName) : name(playName), counter(1) {}
 
-    //The insertion method inserts PlayLine struct into vector data of Play object 
-	Play& operator<< (PlayLine line);
-
-    //The print method takes a reference to an ostream, and uses the ostream and 
-    //the structured lines stored in its member container to print out a properly 
-    //ordered script
-	void print(ostream &out);
+	void recite(vector<PlayLine>::const_iterator &line);
 
 };
 

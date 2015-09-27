@@ -41,7 +41,7 @@ private:
 	string currentPlayer;
 
 public:
-	Play(string playName) : name(playName), counter(0) {}
+	Play(string playName) : name(playName), counter(1) {}
 
 	void recite(vector<PlayLine>::const_iterator &line);
 

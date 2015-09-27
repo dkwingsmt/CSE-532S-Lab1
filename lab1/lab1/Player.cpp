@@ -33,7 +33,6 @@ void Player::read() {
                 trim(text);
                 if (!text.empty())
                     lines.push_back(PlayLine({lineNumber, name, text}));
-
             }
         }
     }

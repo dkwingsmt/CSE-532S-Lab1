@@ -62,6 +62,9 @@ int main(int argc, char *  argv[])
         player.exit();
     }
 
+	cout << "Finished.\n";
+	getchar();
+
 	return 0;
 }
 

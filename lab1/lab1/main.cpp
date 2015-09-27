@@ -33,6 +33,7 @@ int main(int argc, char *  argv[])
     const string &&fileDir = dirnameOf(argv[1]);
 
 	list<Player> players;
+	list<ifstream> files;
     // Read play file
 	Play play(playName);
     string line;
@@ -45,8 +46,8 @@ int main(int argc, char *  argv[])
         string inputFileName;
         if (istringstream(line) >> characterName >> inputFileName)
         {
-            ifstream ifs(fileDir + inputFileName);
-            players.push_back(Player(play, move(ifs), characterName));
+            files.push_back(ifstream(fileDir + inputFileName));
+            players.push_back(Player(play, files.back(), characterName));
         }
     }
 

@@ -9,9 +9,9 @@
 
 using namespace std;
 
-Player::Player(Play &play, ifstream input_file, const string &name) : 
+Player::Player(Play &play, ifstream &input_file, const string &name) : 
     play(play), 
-    input_file(move(input_file)),
+    input_file(input_file),
     name(name) {
 
 }
@@ -41,17 +41,17 @@ void Player::read() {
 
 void Player::act() {
 
-    for(vector<PlayLine>::iterator playIterator = lines.begin(); playIterator != lines.end();)
+    for(vector<PlayLine>::const_iterator playIterator = lines.begin(); playIterator != lines.end();)
         play.recite(playIterator);
 
 }
 
 void Player::enter() {
 
-    player_thread = move(thread([&](){
+    player_thread = thread([this](){
         read();
         act();
-    }));
+    });
 
 }
 

@@ -17,7 +17,7 @@ class Player {
 
 private:
     const string     name;
-    ifstream         input_file;
+    ifstream         &input_file;
     vector<PlayLine> lines;
     Play             &play;
     thread           player_thread;
@@ -27,7 +27,15 @@ private:
     void act();
 
 public:
-    Player(Play &play, ifstream input_file, const string &name);
+    Player(Play &play, ifstream &input_file, const string &name);
+    Player(Player &) = delete;
+    Player(Player &&tmp) :
+        name(tmp.name),
+        input_file(tmp.input_file),
+        lines(move(tmp.lines)),
+        play(tmp.play),
+        player_thread(move(tmp.player_thread))
+    {}
 
     void enter();
 

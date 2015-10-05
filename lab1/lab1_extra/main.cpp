@@ -54,18 +54,24 @@ vector<vector<string>> process_play(ifstream &playfile, vector<string> &characte
 }
 
 #define CORRECT_ARGC 4
+#define CORRECT_ARGC_SCRAMBLE 5
 #define ARG_PLAY_FILE 1
 #define ARG_PLAY_NAME 3
 #define ARG_CONFIG_FILE 2
+#define ARG_SCRAMBLE 1
 int main(int argc, char *  argv[])
 {
 	bool scramble_flag = false;
-	if (argc < CORRECT_ARGC) {
+	if ( argc < CORRECT_ARGC ) 
+	{
+		cout << argc << " This is argc"<<endl;
 		cout << "usage: " << argv[0] << " <play file> <config file> <play name>" << endl;
+		cout << "OR" << endl;
+		cout << "usage: " << argv[0]<< " SCRAMBLE" << " <play file> <config file> <play name>" << endl;
 		return ARGUMENT_ERROR;
 	}
 	int shiftNum = 0;
-	if (!strcmp(argv[1], "SCRAMBLE") )
+	if (!strcmp(argv[ARG_SCRAMBLE], "SCRAMBLE") )
 	{
 		shiftNum = 1;
 		scramble_flag = true;

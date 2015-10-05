@@ -125,6 +125,24 @@ And print it
     but works good for a small program as a quick start. I'll probably switch
     to method 3 with manager class if the project starts to grow.
 
+3: Design of the Player class
+
+  The player object was designed to work as an active object. The instantiation 
+  of the thread that performs the reading of the corresponding play fragment file
+  is encapsulated in the class. The class also has the following design features:
+
+    1) Encapsulation via class interface
+       The only way to interact with a Player object after instantiation is to
+       active it and wait for it to stop. The thread internally interacts with
+       a play object to append the lines read from its file (via the private
+       read() member function) and then contends to print lines to the console
+       (via the private act() member function)
+
+    2) Fault Tolerance
+       The read() member function ignores any lines that are badly formatted,
+       and skip reading them instead of throwing an exception or printing an
+       error message.
+
 3: Syntax of the play file:
     
     Basically we adopted the following syntax rules:
@@ -169,6 +187,10 @@ And print it
 
 - We find that the Wrapper Facade Pattern is a really smart idea that it makes 
   the code more maintainable and portable. 
+
+- It can be observed that the active object pattern is quite useful, as the code
+  can be better structured and made easy to read by tying the explicitly tying
+  the object lifecycle with that of the thread running its code
 
 - In this lab, we use different threads to read a same file with different targets, 
   but reading only is relatively safer and therefore we are expecting there will 

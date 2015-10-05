@@ -53,12 +53,16 @@ vector<vector<string>> process_play(ifstream &playfile, vector<string> &characte
 	return seperate_play;
 }
 
+#define CORRECT_ARGC 4
+#define ARG_PLAY_FILE 1
+#define ARG_PLAY_NAME 3
+#define ARG_CONFIG_FILE 2
 int main(int argc, char *  argv[])
 {
 	bool scramble_flag = false;
-	if (argc < 4) {
+	if (argc < CORRECT_ARGC) {
 		cout << "usage: " << argv[0] << " <play file> <config file> <play name>" << endl;
-		return 0;
+		return ARGUMENT_ERROR;
 	}
 	int shiftNum = 0;
 	if (!strcmp(argv[1], "SCRAMBLE") )
@@ -68,19 +72,19 @@ int main(int argc, char *  argv[])
 
 	}
 
-	ifstream playFile(argv[1 + shiftNum]);
+	ifstream playFile(argv[ARG_PLAY_FILE + shiftNum]);
 	if (!playFile) {
-		cout << "Unable to open play file " << argv[1] << endl;
-		return 1;
+		cout << "Unable to open play file " << argv[ARG_PLAY_FILE] << endl;
+		return NO_PLAY_AVAILABLE;
 	}
 
 	//Take the rest of arguments as play name
-	string playName = argv[3 + shiftNum];
-	for (int i = 4; i < argc; i++)
+	string playName = argv[ARG_PLAY_NAME + shiftNum];
+	for (int i = CORRECT_ARGC; i < argc; i++)
 	{
 		playName = playName + " " + argv[i];
 	}
-	string configFile = argv[2 + shiftNum];
+	string configFile = argv[ARG_CONFIG_FILE + shiftNum];
 
 	// Character files are placed in the same directory as the config file  
 	const string &&fileDir = dirnameOf(configFile);
@@ -96,7 +100,7 @@ int main(int argc, char *  argv[])
 			ofstream charFile(fileName);
 		if (!charFile) {
 			cout << "Unable to open file " << fileName << endl;
-			return 2;
+			return FILE_NOT_OPEN;
 		}
 		if (scramble_flag)
 		{

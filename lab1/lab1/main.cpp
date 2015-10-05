@@ -7,30 +7,31 @@
 #include "common.h"
 
 using namespace std;
-
+#define CORRECT_ARGC 2
+#define ARG_CONFIG_FILE 1
 int main(int argc, char *  argv[])
 {
     // Parse command line arguments
-	if (argc < 2  || argc > 2) {
+	if (argc != CORRECT_ARGC ) {
 		cout << "usage: " << argv[0] << " <config file>" << endl;
-		return 0;
+		return ARGUMENT_ERROR;
 	}
 
-	ifstream configFile(argv[1]);
+	ifstream configFile(argv[ARG_CONFIG_FILE]);
 	if (!configFile) {
-		cout << "Unable to open file " << argv[1] << endl;
-		return 1;
+		cout << "Unable to open file " << argv[ARG_CONFIG_FILE] << endl;
+		return FILE_NOT_OPEN;
 	}
 
 	string playName;
 	while (playName.empty() && getline(configFile, playName));  // empty body
 	if (playName.empty()) {
 		cout << "No play name available." << endl;
-		return 2;
+		return NO_PLAY_AVAILABLE;
 	}
 	cout << "[PlayName: " << playName << "]" << endl;
 
-    const string &&fileDir = dirnameOf(argv[1]);
+    const string &&fileDir = dirnameOf(argv[ARG_CONFIG_FILE]);
 
 	list<Player> players;
     // Read play file

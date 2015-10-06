@@ -65,6 +65,7 @@ void error_message(char* argv[])
 #define CORRECT_ARGC_SCRAMBLE 5
 #define ARG_PLAY_FILE 1
 #define ARG_CONFIG_FILE 2
+#define ARG_PLAY_NAME 3
 #define ARG_SCRAMBLE 1
 
 int main(int argc, char *  argv[])
@@ -92,7 +93,7 @@ int main(int argc, char *  argv[])
 
 	//Take the rest of arguments as play name
 	string playName = argv[ARG_PLAY_NAME + shiftNum];
-	for (int i = CORRECT_ARGC; i < argc; i++)
+	for (int i = CORRECT_ARGC + shiftNum; i < argc; i++)
 	{
 		playName = playName + " " + argv[i];
 	}

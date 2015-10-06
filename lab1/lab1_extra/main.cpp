@@ -53,20 +53,30 @@ vector<vector<string>> process_play(ifstream &playfile, vector<string> &characte
 	return seperate_play;
 }
 
+
+void error_message(char* argv[])
+{
+	cout << "usage: " << argv[0] << " <play file> <config file> <play name>" << endl;
+	cout << "OR" << endl;
+	cout << "usage: " << argv[0] << " SCRAMBLE" << " <play file> <config file> <play name>" << endl;
+}
+
 #define CORRECT_ARGC 4
+#define CORRECT_ARGC_SCRAMBLE 5
 #define ARG_PLAY_FILE 1
 #define ARG_CONFIG_FILE 2
-#define ARG_PLAY_NAME 3
+#define ARG_SCRAMBLE 1
 
 int main(int argc, char *  argv[])
 {
 	bool scramble_flag = false;
-	if (argc < CORRECT_ARGC) {
-		cout << "usage: " << argv[0] << " <play file> <config file> <play name>" << endl;
+	if ( argc < CORRECT_ARGC ) 
+	{
+		error_message(argv);
 		return ARGUMENT_ERROR;
 	}
 	int shiftNum = 0;
-	if (!strcmp(argv[1], "SCRAMBLE") )
+	if (!strcmp(argv[ARG_SCRAMBLE], "SCRAMBLE") )
 	{
 		shiftNum = 1;
 		scramble_flag = true;
@@ -75,6 +85,7 @@ int main(int argc, char *  argv[])
 
 	ifstream playFile(argv[ARG_PLAY_FILE + shiftNum]);
 	if (!playFile) {
+		error_message(argv);
 		cout << "Unable to open play file " << argv[ARG_PLAY_FILE] << endl;
 		return NO_PLAY_AVAILABLE;
 	}
@@ -101,6 +112,7 @@ int main(int argc, char *  argv[])
 			ofstream charFile(fileName);
 		if (!charFile) {
 			cout << "Unable to open file " << fileName << endl;
+			error_message(argv);
 			return FILE_NOT_OPEN;
 		}
 		if (scramble_flag)

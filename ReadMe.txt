@@ -130,10 +130,12 @@ And print it
 
 4: The Wrapper Facades we used:
 
-	We used a guard object TGuard, which accepts a procedure for constructor
-    and calls it in the destructor. By contructing it with a lambda function
-    that joins all the threads, we ensure that threads are joined whatever 
-    happens that terminates the block, before the play prints.
+    While we used an explicit guard object TGuard to ensure that all threads are
+    joined, since threads belongs to separate Players in this lab, we let 
+    the destructor of a Player class to join its own thread.
+
+    Also, lock_guards from STL library were adopted to synchroise between 
+    threads.
 
 5: Design of config generator: 
 
@@ -141,20 +143,16 @@ And print it
     list from the play and the lines for each character, and writes the results
     into correct files.
     
-    We tested edges cases such as an empty play or character file (while it's 
-    legal). 
+    We tested the following edges cases:
+
+    1. An empty play or character file (while it's legal). 
+    2. Incorrect spelling of specifier SCRAMBLE in lab1_extra.
     
     We didn't test cases such as illegal file (whether it's play, config or 
     character file).
 
 
 == Insights, Observations and Questions encountered == 
-	
-- We can use std::ref so that the thread will update the data structure that's 
-  passed in by reference.
-
-- We find that the Wrapper Facade Pattern is a really smart idea that it makes 
-  the code more maintainable and portable. 
 
 - It can be observed that the active object pattern is quite useful, as the code
   can be better structured and made easy to read by tying the explicitly tying
@@ -164,7 +162,21 @@ And print it
   but reading only is relatively safer and therefore we are expecting there will 
   be more challenging tasks that involves both reading and writing with threads 
   coming up in the following labs.
-***************/
+
+- Argument parsing has already become a little bloated with an optional SCRAMBLE.
+  If the requirement keeps growing, we'll need to extract this part into a 
+  separate function and develop a unified method of parsing in order to avoid
+  duplicate code.
+
+- We encountered some inconsistancy between Visual Studio 2013 and gcc. In gcc,
+  moving constructor is one of the standard functions of a class, which means it
+  can be implicitly inferred even with customised constructor defined, and it 
+  can be set to =default, while it's not the case in VS. That caused a problem 
+  that took us a lot of time because the compile kept complaining that a 
+  deleted function was called but referring to a line in a standard library file,
+  which was in fact caused by the moving constructor of Player that was deleted
+  because of customized constructors.
+
 	
 == Acknowledgement ==
 

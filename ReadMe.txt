@@ -59,7 +59,9 @@ the standard output.
 
 The usage for lab1_extra.exe is
 
-    lab1_extra.exe <play_file_path> <configuration_file_path>
+    lab1_extra.exe <play_file_path> <configuration_file_path> <play name>
+	Or
+    lab1_extra.exe SCRAMBLE <play_file_path> <configuration_file_path> <play name>
 
 It reads and parses the play file, and generates a config file accordingly.
 It will also generate per-character play files in the SAME DIRECTORY as the 
@@ -143,6 +145,14 @@ And print it
     list from the play and the lines for each character, and writes the results
     into correct files.
     
+    This part is implemented in the same way as we did in lab0, except for
+	(1)We fixed hard coding problem by using #define and enum.
+		
+	(2)When "SCRAMBLE" argument is given, we randomize the vector that holds
+	   the lines of each script by using std::random_shuffle. 
+	   
+	(3)Used a scramble_flag to indicate if commend "SCRAMBLE" is given to 
+	    determine whether or not to shift the index of the rest command lines.
     We tested the following edges cases:
 
     1. An empty play or character file (while it's legal). 

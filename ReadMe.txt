@@ -10,11 +10,13 @@ Team Member:
 
 Unpack the zip file with 7zip.
 
-The extracted folder contains a copy of this ReadMe.txt, and another folder,
-where a Visual Studio 2013 solution for this assignment resides. 
+The extracted folder contains a copy of this ReadMe.txt, a sample_result folder
+containing sample output from the executables, and the solution folder
+for this assignment.
 
 > lab1\
 > |- ReadMe.txt
+> |- sample_result\
 > |- lab1\
 >    |- lab1\
 >    |- lab1_extra\
@@ -59,9 +61,7 @@ the standard output.
 
 The usage for lab1_extra.exe is
 
-    lab1_extra.exe <play_file_path> <configuration_file_path> <play name>
-	Or
-    lab1_extra.exe SCRAMBLE <play_file_path> <configuration_file_path> <play name>
+    lab1_extra.exe [SCRAMBLE] <play_file_path> <configuration_file_path> <play name>
 
 It reads and parses the play file, and generates a config file accordingly.
 It will also generate per-character play files in the SAME DIRECTORY as the 
@@ -140,12 +140,9 @@ And print it
     threads.
 
 5: Design of config generator: 
-
-    The same rule as 3 is used to parse the play file. It reads the character 
-    list from the play and the lines for each character, and writes the results
-    into correct files.
     
-    This part is implemented in the same way as we did in lab0, except for
+    This part is implemented in the same way as we did in lab0, except that
+
 	(1)We fixed hard coding problem by using #define and enum.
 		
 	(2)When "SCRAMBLE" argument is given, we randomize the vector that holds
@@ -153,13 +150,20 @@ And print it
 	   
 	(3)Used a scramble_flag to indicate if commend "SCRAMBLE" is given to 
 	    determine whether or not to shift the index of the rest command lines.
-    We tested the following edges cases:
+
+6: Edges cases
+
+    Edge cases we've tested include:
 
     1. An empty play or character file (while it's legal). 
     2. Incorrect spelling of specifier SCRAMBLE in lab1_extra.
+    3. Incomplete lines in character files, including a non-empty character file .
+       that consists only with incomplete lines.
     
-    We didn't test cases such as illegal file (whether it's play, config or 
-    character file).
+    Edges cases we did not solve or test include:
+
+    1. Noncontinuous line numbers in character files.
+    2. Other illegal file formats, for play, config or character files.
 
 
 == Insights, Observations and Questions encountered == 

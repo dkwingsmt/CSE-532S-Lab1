@@ -82,48 +82,23 @@ And print it
 == Description ==
 === Overview ===
 
-/************* TODO
-1: Design of structured line:
+1: Design of the Play class
+  
+  We kept the design of structured lines (PlayLine) from the last lab, which
+  packages the line number, the character, and the text of a line. It also 
+  implements a less than operator.
 
-	We made a seperate struct PlayLine to store the line number, the character 
-    name and text as its data member. A seperate struct makes the program 
-    structure clearer and easier to extend.
-
-2: Design of Play class and print method:
-
-    In order to support line insertion and printing in order, the play class
-    can be designed in a few different fashion, including:
-
-    1) Use a priority queue (heap) to store inserted lines, push each line
-       out upon printing. Since fetching sorted list from a heap requires
-       modifying it, it requires non-const print method, or a mutable member 
-       queue. What's more, all of the lines has to be pushed and popped
-       for each time print is called.
-
-    2) Use a list or vector to store lines, sort them upon printing. 
-       This method optimizes for insertion time.  If we sort them in a new list,
-       we pay extra memory and time overhead but get a const print method. 
-       If we sort them in situ, we lost const-ness of print but saved time on 
-       both insertion and printing for the second time.
-
-    3) Use a heap or list for insertion, and another list to store sorted lines 
-       upon printing. This avoids overhead of unnecessary sorting when printing
-       for multiple times with nothing new inserted. But the management of 
-       these two storage requires carefulness, especially when we have to make
-       them both mutable if we want a const print. It's better to delegate them
-       to a seperate manager class.
-
-    4) Use a switch, that allows insertion only when it's turned on, and sort
-       the lines upon turning it off. It is basically the most time-and-memory
-       efficient design, avoiding all of the shortcomings of the previous designs.
-       But it requires extra attention to be paid by outside code, and the 
-       assert(sorted) being done runtime is really dangerous when the project
-       starts to grow.
-
-    Nevertheless, we chose method 2, used a vector to store inserted lines,
-    and sort them on print, leaving a non-const print. It's not that ideal,
-    but works good for a small program as a quick start. I'll probably switch
-    to method 3 with manager class if the project starts to grow.
+  The majority of the tasks assigned to Play in the last lab, was assigned 
+  to Player instead this time, including reading and ordering. The Play class
+  actually performs as a platform for playing, and opens an interface recite()
+  for players. 
+  
+  recite() receives a structured line from players which contains every 
+  information needed. As it will be called from multiple players in seperate
+  threads, a condition variable as well as a lock are used to keep the order.
+  When a line completes its recitation, it increases the line number, releases 
+  the lock, and notify all currently waiting players. Only the one holding 
+  the right line number will be waken and get the lock.
 
 3: Design of the Player class
 
@@ -143,22 +118,15 @@ And print it
        and skip reading them instead of throwing an exception or printing an
        error message.
 
+   In the last lab we mentioned four different sort of methods to keep lines in 
+   order for each player. Now that an explicit enter() method is always required, 
+   we can safely store the lines out of order upon insertion and sort them just 
+   before acting.
+
 3: Syntax of the play file:
     
-    Basically we adopted the following syntax rules:
-
-    1) Every line is read with the spaces on both end of the line trimmed.
-
-    2) A line starting with '[' (after trimming) is considered comment and not
-       processed at all.
-
-    3) The first non-blank line following a blank line or the start of the file, 
-       if ending with '.', is considered a character name (eliminating that '.'). 
-       Only one character is allowed at a time, and no space is allowed in 
-       the name.
-
-    4) The remaining non-blank lines are effective lines, belonging to the 
-       last character met. The line number is counted for effective lines only.
+    The same as the last lab, but allow out-of-order lines for per-character 
+    files.
 
 4: The Wrapper Facades we used:
 

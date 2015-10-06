@@ -42,6 +42,10 @@ public:
         player_thread(move(tmp.player_thread))
     {}
 
+    ~Player() {
+        exit();
+    }
+
     void enter();
 
     void exit();

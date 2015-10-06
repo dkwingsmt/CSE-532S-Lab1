@@ -55,8 +55,9 @@ vector<vector<string>> process_play(ifstream &playfile, vector<string> &characte
 
 #define CORRECT_ARGC 4
 #define ARG_PLAY_FILE 1
-#define ARG_PLAY_NAME 3
 #define ARG_CONFIG_FILE 2
+#define ARG_PLAY_NAME 3
+
 int main(int argc, char *  argv[])
 {
 	bool scramble_flag = false;

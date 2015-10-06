@@ -20,11 +20,12 @@
 
 using namespace std;
 
-enum ErrorCode{
+enum ErrorCode {
 	FILE_NOT_OPEN = 1,
 	ARGUMENT_ERROR,
 	NO_PLAY_AVAILABLE
 };
+
 //The guard object, that performs given procedure upon desctuction. 
 class TGuard {
 public:

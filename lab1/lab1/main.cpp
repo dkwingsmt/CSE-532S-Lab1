@@ -7,8 +7,10 @@
 #include "common.h"
 
 using namespace std;
+
 #define CORRECT_ARGC 2
 #define ARG_CONFIG_FILE 1
+
 int main(int argc, char *  argv[])
 {
     // Parse command line arguments
@@ -61,7 +63,7 @@ int main(int argc, char *  argv[])
         player.exit();
     }
 
-	cout << "Finished.\n";
+	cout << "Finished." << endl;
 	getchar();
 
 	return 0;
